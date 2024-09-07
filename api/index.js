@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv"; // install dotenv in the backend because we cannot have .env file in the backend
 import useRouter from "./routes/user.route.js";
+import authRouter from "./routes/auth.route.js";
 
 dotenv.config();
 mongoose
@@ -15,8 +16,11 @@ mongoose
 
 const app = express();
 
+app.use(express.json());
+
 app.listen(3000, () => {
   console.log("\x1b[36m%s\x1b[0m", "----- Server is live on port 3000! ----- ");
 });
 
 app.use("/api/user", useRouter);
+app.use("/api/auth", authRouter);
