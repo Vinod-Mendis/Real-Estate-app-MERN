@@ -44,7 +44,7 @@ export const signin = async (req, res, next) => {
   }
 };
 
-/* Sign in function
+/*  google Sign in function
 -------------------------------------------- */
 export const google = async (req, res, next) => {
   try {
