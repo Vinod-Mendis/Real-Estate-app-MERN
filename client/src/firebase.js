@@ -10,7 +10,7 @@ const firebaseConfig = {
   projectId: "real-estate-mern-88a7e",
   storageBucket: "real-estate-mern-88a7e.appspot.com",
   messagingSenderId: "451427946826",
-  appId: "1:451427946826:web:482c4b9416a73b7639b1b3"
+  appId: "1:451427946826:web:482c4b9416a73b7639b1b3",
 };
 
 // Initialize Firebase
