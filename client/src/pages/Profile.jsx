@@ -260,7 +260,9 @@ export default function Profile() {
             <div
               key={listing._id}
               className="flex justify-between border border-slate-50 hover:bg-slate-50 p-4 rounded-xl hover:shadow-lg transition">
-              <Link to={`/listing/${listing._id}`} className="items-center flex">
+              <Link
+                to={`/listing/${listing._id}`}
+                className="items-center flex">
                 <div className="flex justify-between w-full items-center">
                   <img
                     src={listing.imageUrls[0]}
@@ -273,7 +275,9 @@ export default function Profile() {
                 </div>
               </Link>
               <div className="flex flex-col">
-                <button className="text-blue-500 font-medium">Edit</button>
+                <Link to={`/update-listing/${listing._id}`}>
+                  <button className="text-blue-500 font-medium">Edit</button>
+                </Link>
                 <button
                   onClick={() => handleDeleteListing(listing._id)}
                   className="text-red-400 font-medium">
