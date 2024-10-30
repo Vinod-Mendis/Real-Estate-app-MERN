@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import ListingCard from "../components/ListingCard";
 
 export default function Search() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const [listings, setListings] = useState(false);
-  
+  const [listings, setListings] = useState([]);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -61,7 +61,6 @@ export default function Search() {
   });
   // console.log(filterData);
   console.log(listings);
-
 
   const handleChange = (e) => {
     if (
@@ -211,8 +210,19 @@ export default function Search() {
           </button>
         </form>
       </div>
-      <div className="">
+      <div className="flex flex-col">
         <h1 className="text-3xl font-semibold p-3 mt-5">Listing Results:</h1>
+        <div className="p-7 flex flex-wrap gap-4">
+          {!loading && listings.length === 0 && (
+            <p className="text-xl">No Listings Found</p>
+          )}
+          {loading && <p className="text-xl">Loading...</p>}
+          {!loading &&
+            listings &&
+            listings.map((listing) => (
+              <ListingCard key={listing._id} listing={listing} />
+            ))}
+        </div>
       </div>
     </div>
   );
