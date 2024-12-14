@@ -8,6 +8,7 @@ export default function Search() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [listings, setListings] = useState([]);
+  const [showMore, setShowMore] = useState(false);
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
@@ -41,10 +42,17 @@ export default function Search() {
 
     const fetchListing = async () => {
       setLoading(true);
+      setShowMore(false);
       const searchQuery = urlParams.toString();
       const res = await fetch(`/api/listing/fetch?${searchQuery}`);
       const data = await res.json();
-      setListings(data);
+      const initialData = data.slice(0, 8);
+      if (initialData.length < 9) {
+        setShowMore(true);
+      } else {
+        setShowMore(false);
+      }
+      setListings(initialData);
       setLoading(false);
     };
 
@@ -107,6 +115,20 @@ export default function Search() {
     urlParams.set("order", filterData.order);
     const searchQuery = urlParams.toString();
     navigate(`/search?${searchQuery}`);
+  };
+
+  const onShowMoreClick = async () => {
+    const numberOfListings = listings.length;
+    const startIndex = numberOfListings;
+    const urlParams = new URLSearchParams(location.search);
+    urlParams.set("startIndex", startIndex);
+    const searchQuery = urlParams.toString();
+    const res = await fetch(`api/listing/fetch?${searchQuery}`);
+    const data = await res.json();
+    if (data.length < 9) {
+      setShowMore(false);
+    }
+    setListings([...listings, ...data]);
   };
 
   return (
@@ -223,6 +245,13 @@ export default function Search() {
               <ListingCard key={listing._id} listing={listing} />
             ))}
         </div>
+        {showMore && (
+          <button
+            className="self-center rounded-lg ml-7 mb-2 bg-green-500 hover:bg-green-600 transition text-white p-4 text-center"
+            onClick={onShowMoreClick}>
+            show more
+          </button>
+        )}
       </div>
     </div>
   );
